@@ -4,185 +4,333 @@
 import tkinter
 from tkinter import *
 
-#calculation
+#molar mass of components
 SiO2_MW = 60.08 #g/mol
 Al2O3_MW = 101.96 #g/mol
+CaO_MW = 56.0774 #g/mol
+Fe2O3_MW = 159.69 #g/mol
+MgO_MW = 40.3044 #g/mol
 Na2O_MW = 61.9789 #g/mol
 
-#convert kg to g
-def get_gram(mass):
-    mass = mass*1000
-    return mass
+font = "Arial"
+PSU_BLUE = "#041E42"
 
-#get mass of the particular chemical compound
+#create Tkinter object for GUI
+window = Tk()
+
+#returns the mass of each component according to its percentage
 def get_compound_mass(precursor_mass, percentage):
     return float(precursor_mass * percentage / 100)
 
-#get mole function that will take the mass in gram and turn it into mole
-def get_SiO2_mole(mass):
-    return mass/SiO2_MW
-def get_Al2O3_mole(mass):
-    return mass/Al2O3_MW
-def get_Na2O_mole(mass):
-    return mass/Na2O_MW
+#Logo
+ReAIM_logo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\ReAIMlogo.png")
+CClogo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\CClogo.png")
+l1 = Label(window, image = ReAIM_logo,text="", font = font, bg= PSU_BLUE)
+c1 = Label(window, image = CClogo,text="", font = font, bg= PSU_BLUE)
 
-#function to get ratio between two numbers
-def get_ratio(x,y):
-    x = float(x)
-    y = float(y)
-    ratio = float(round(x / y, 1))
-    return ratio
+#setting up screen
+width_of_window = 800
+height_of_window = 450
 
-def get_Si_mole(compound_mole):
-    return compound_mole
-def get_Al_mole(compound_mole):
-    return compound_mole * 2
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
 
-#create Tkinter object for GUI
-window = tkinter.Tk()
+x_coordinate = (screen_width/2) - (width_of_window/2)
+y_coordinate = (screen_height/2) - (height_of_window/2)
+
+window.geometry("%dx%d+%d+%d" % (width_of_window, height_of_window, x_coordinate, y_coordinate))
+window.configure(bg= PSU_BLUE)
 
 #rename the title of the window
 window.title("Concrete Calculator")
 
-#delete add precursor button and prompt after clicked
-def add_precursor_delete():
-    s1.destroy()
-    s2.destroy()
+def start():
 
-#action after clicking on precursor
-def add_precursor():
-    add_precursor_delete()
+    def reset():
+        e3.delete(0, END)
+        e4.delete(0, END)
+        e5.delete(0, END)
+        e6.delete(0, END)
+        e7.delete(0, END)
+        e8.delete(0, END)
+        e9.delete(0, END)
+        e10.delete(0, END)
+        e3.insert(0, '')
+        e4.insert(0,'0')
+        e5.insert(0, '0')
+        e6.insert(0, '0')
+        e7.insert(0, '0')
+        e8.insert(0, '0')
+        e9.insert(0, '0')
+        e10.insert(0, '0')
 
-    #after clicking calculate button, following steps execute
+
+
     def calculate():
 
-        #function to empty entries from previous calculation
-        def reset():
-            l5_b.destroy()
-            l6_b.destroy()
-            l7_b.destroy()
-            l8_b.destroy()
-            l9_b.destroy()
-            l10_b.destroy()
-            l11_b.destroy()
-            l12_b.destroy()
-            l13_b.destroy()
-            l14_b.destroy()
-            e1.delete(0,END)
-            e2.delete(0, END)
-            e3.delete(0, END)
-            e4.delete(0, END)
-
-        formula = e1.get()
-        mass_content = float(e2.get())
-        SiO2_content = float(e3.get())
-        Al2O3_content = float(e4.get())
-
-        SiO2_mass = get_compound_mass(mass_content, SiO2_content)
-        Al2O3_mass = get_compound_mass(mass_content, Al2O3_content)
-
-        SiO2_mole = float(get_SiO2_mole(SiO2_mass))
-        Al2O3_mole = float(get_Al2O3_mole(Al2O3_mass))
-
-        Si_mole = float(get_Si_mole(SiO2_mole))
-        Al_mole = float(get_Al_mole(Al2O3_mole))
-
-        Si_Al_ratio = float(get_ratio(Si_mole, Al_mole))
-        SiO2_Al2O3_ratio = float(get_ratio(SiO2_mole, Al2O3_mole))
-
-        l5 = Label(window, text="formula is: ")
-        l5.grid(row=50, column=0, columnspan=3, padx=10, pady=10)
-        l5_b = Label(window, text=str(formula))
-        l5_b.grid(row=51, column=0, columnspan=3, padx=10, pady=5)
-
-        l6 = Label(window, text="Total mass in gram: ")
-        l6.grid(row=50, column=3, columnspan=3, padx=10, pady=30)
-        l6_b = Label(window, text=str(mass_content))
-        l6_b.grid(row=51, column=3, columnspan=3, padx=10, pady=5)
-
-        l7 = Label(window, text="SiO2 mass in gram: ")
-        l7.grid(row=50, column=7, columnspan=3, padx=10, pady=30)
-        l7_b = Label(window, text=str(SiO2_mass))
-        l7_b.grid(row=51, column=7, columnspan=3, padx=10, pady=5)
-
-        l8 = Label(window, text="Al2O3 mass in gram: ")
-        l8.grid(row=50, column=11, columnspan=3, padx=10, pady=30)
-        l8_b = Label(window, text=str(Al2O3_mass))
-        l8_b.grid(row=51, column=11, columnspan=3, padx=10, pady=5)
-
-        l9 = Label(window, text="SiO2 mole is: ")
-        l9.grid(row=50, column=15, columnspan=3, padx=10, pady=30)
-        l9_b = Label(window, text=str(SiO2_mole))
-        l9_b.grid(row=51, column=15, columnspan=3, padx=10, pady=5)
-
-        l10 = Label(window, text="Al2O3 mole is: ")
-        l10.grid(row=50, column=19, columnspan=3, padx=10, pady=30)
-        l10_b = Label(window, text=str(Al2O3_mole))
-        l10_b.grid(row=51, column=19, columnspan=3, padx=10, pady=5)
-
-        l11 = Label(window, text="Si:Al ")
-        l11.grid(row=50, column=23, columnspan=3, padx=10, pady=30)
-        l11_b = Label(window, text=str(Si_Al_ratio))
-        l11_b.grid(row=51, column=23, columnspan=3, padx=10, pady=5)
-
-        l12 = Label(window, text="SiO2:Al2O3 ")
-        l12.grid(row=50, column=27, columnspan=3, padx=10, pady=30)
-        l12_b = Label(window, text=str(SiO2_Al2O3_ratio))
-        l12_b.grid(row=51, column=27, columnspan=3, padx=10, pady=5)
-
-        l13 = Label(window, text="Si mole")
-        l13.grid(row=50, column=31, columnspan=3, padx=10, pady=30)
-        l13_b = Label(window, text=str(Si_mole))
-        l13_b.grid(row=51, column=31, columnspan=3, padx=10, pady=5)
-
-        l14 = Label(window, text="Al mole")
-        l14.grid(row=50, column=35, columnspan=3, padx=10, pady=30)
-        l14_b = Label(window, text=str(Al_mole))
-        l14_b.grid(row=51, column=35, columnspan=3, padx=10, pady=5)
-
-        #emptying out the entries before inputting
-        reset_button = Button(window, text="reset", padx=40, pady=20, command=reset)
-        reset_button.grid(row=1, column=10, columnspan=3, padx=10, pady=10)
 
 
-    p1 = Label(window, text="Please enter the precursor formula: ")
-    p1.grid(row=0, column=0, columnspan=3, padx=10, pady=30)
+        new_window = Toplevel(window)
+        width_of_window = 600
+        height_of_window = 350
 
-    p2 = Label(window, text="Please enter the precursor's mass in gram (g): ")
-    p2.grid(row=1, column=0, columnspan=3, padx=10, pady=30)
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
 
-    p3 = Label(window, text="Please enter the SiO2 content (mass% as oxide)")
-    p3.grid(row=2, column=0, columnspan=3, padx=10, pady=30)
+        x_coordinate = (screen_width / 2) - (width_of_window / 2)
+        y_coordinate = (screen_height / 2) - (height_of_window / 2)
 
-    p4 = Label(window, text="Please enter the Al2O3 (mass% as oxide)")
-    p4.grid(row=3, column=0, columnspan=3, padx=10, pady=30)
+        new_window.geometry("%dx%d+%d+%d" % (width_of_window, height_of_window, x_coordinate, y_coordinate))
+        new_window.configure(bg=PSU_BLUE)
 
-    e1 = Entry(window, width=35, borderwidth=5)
-    e1.grid(row=0, column=4, columnspan=3, padx=10, pady=30)
+        # rename the title of the window
+        new_window.title("Results")
 
-    e2 = Entry(window, width=35, borderwidth=5)
-    e2.grid(row=1, column=4, columnspan=3, padx=10, pady=30)
-    info2 = e2.get()
+        precursor_mass = float(e4.get())
 
-    e3 = Entry(window, width=35, borderwidth=5)
-    e3.grid(row=2, column=4, columnspan=3, padx=10, pady=30)
+        SiO2_content = float(e5.get())
+        Al2O3_content = float(e6.get())
+        CaO_content = float(e7.get())
+        Fe2O3_content = float(e8.get())
+        MgO_content = float(e9.get())
+        Na2O_content = float(e10.get())
 
-    e4 = Entry(window, width=35, borderwidth=5)
-    e4.grid(row=3, column=4, columnspan=3, padx=10, pady=30)
+        SiO2_mass = float(get_compound_mass(SiO2_content, precursor_mass))
+        Al2O3_mass = float(get_compound_mass(Al2O3_content, precursor_mass))
+        CaO_mass = float(get_compound_mass(CaO_content, precursor_mass))
+        Fe2O3_mass = float(get_compound_mass(Fe2O3_content, precursor_mass))
+        MgO_mass = float(get_compound_mass(MgO_content, precursor_mass))
+        Na2O_mass = float(get_compound_mass(Na2O_content, precursor_mass))
 
-    #calculate button and command
-    calculate_button = Button(window, text="calculate", padx=40, pady=20, command=calculate)
-    calculate_button.grid(row=0, column=10, columnspan=3, padx=10, pady=10)
+        SiO2_mole = float(SiO2_mass/SiO2_MW)
+        Al2O3_mole = float(Al2O3_mass/Al2O3_MW)
+        CaO_mole = float(CaO_mass/CaO_MW)
+        Fe2O3_mole = float(Fe2O3_mass/Fe2O3_MW)
+        MgO_mole = float(MgO_mass/MgO_MW)
+        Na2O_mole = float(Na2O_mass/Na2O_MW)
+
+        l11 = Label(new_window, text="Your precursor " + e3.get() + " with the mass of " + str(e4.get()) + " has the following component makeups: ", bg=PSU_BLUE, fg="white")
+        l11.grid(row=0, column=0)
+
+        l12 = Label(new_window, text="Components", bg=PSU_BLUE, fg="white")
+        l12.grid(row=0, column=0, padx=30, pady=30)
+        l12.place(relx=0.08, rely=0.1, anchor=CENTER)
 
 
-s1 = Label(window,text="Please Click to add and define a precursor: ")
-s1.grid(row=0, column=0, columnspan=3, padx=10, pady=30)
 
-s2 = Button(window, text="Add a precursor", padx=40, pady=20, command=add_precursor)
-s2.grid(row=0, column=10, columnspan=3, padx=10, pady=10)
+        l15 = Label(new_window, text="SiO2", bg=PSU_BLUE, fg="white")
+        l15.grid(row=0, column=0, padx=30, pady=30)
+        l15.place(relx=0.08, rely=0.2, anchor=CENTER)
+
+
+        #component name column
+        l17 = Label(new_window, text="Al2O3", bg=PSU_BLUE, fg="white")
+        l17.grid(row=0, column=0, padx=30, pady=30)
+        l17.place(relx=0.08, rely=0.3, anchor=CENTER)
+
+        l18 = Label(new_window, text="CaO", bg=PSU_BLUE, fg="white")
+        l18.grid(row=0, column=0, padx=30, pady=30)
+        l18.place(relx=0.08, rely=0.4, anchor=CENTER)
+
+        l19 = Label(new_window, text="Fe2O3", bg=PSU_BLUE, fg="white")
+        l19.grid(row=0, column=0, padx=30, pady=30)
+        l19.place(relx=0.08, rely=0.5, anchor=CENTER)
+
+        l20 = Label(new_window, text="MgO", bg=PSU_BLUE, fg="white")
+        l20.grid(row=0, column=0, padx=30, pady=30)
+        l20.place(relx=0.08, rely=0.6, anchor=CENTER)
+
+        l21 = Label(new_window, text="Na2O", bg=PSU_BLUE, fg="white")
+        l21.grid(row=0, column=0, padx=30, pady=30)
+        l21.place(relx=0.08, rely=0.7, anchor=CENTER)
+
+
+        #masses column
+        l22 = Label(new_window, text="mass (g)", bg=PSU_BLUE, fg="white")
+        l22.grid(row=0, column=0, padx=30, pady=30)
+        l22.place(relx=0.3, rely=0.1, anchor=CENTER)
+
+        l23 = Label(new_window, text=SiO2_mass, bg=PSU_BLUE, fg="white")
+        l23.grid(row=0, column=0, padx=30, pady=30)
+        l23.place(relx=0.3, rely=0.2, anchor=CENTER)
+
+        l24 = Label(new_window, text=Al2O3_mass, bg=PSU_BLUE, fg="white")
+        l24.grid(row=0, column=0, padx=30, pady=30)
+        l24.place(relx=0.3, rely=0.3, anchor=CENTER)
+
+        l25 = Label(new_window, text=CaO_mass, bg=PSU_BLUE, fg="white")
+        l25.grid(row=0, column=0, padx=30, pady=30)
+        l25.place(relx=0.3, rely=0.4, anchor=CENTER)
+
+        l26 = Label(new_window, text=Fe2O3_mass, bg=PSU_BLUE, fg="white")
+        l26.grid(row=0, column=0, padx=30, pady=30)
+        l26.place(relx=0.3, rely=0.5, anchor=CENTER)
+
+        l27 = Label(new_window, text=MgO_mass, bg=PSU_BLUE, fg="white")
+        l27.grid(row=0, column=0, padx=30, pady=30)
+        l27.place(relx=0.3, rely=0.6, anchor=CENTER)
+
+        l28 = Label(new_window, text=Na2O_mass, bg=PSU_BLUE, fg="white")
+        l28.grid(row=0, column=0, padx=30, pady=30)
+        l28.place(relx=0.3, rely=0.7, anchor=CENTER)
+
+
+        #moles column
+        l14 = Label(new_window, text="moles", bg=PSU_BLUE, fg="white")
+        l14.grid(row=0, column=0, padx=30, pady=30)
+        l14.place(relx=0.5, rely=0.1, anchor=CENTER)
+
+        l29 = Label(new_window, text=SiO2_mole, bg=PSU_BLUE, fg="white")
+        l29.grid(row=0, column=0, padx=30, pady=30)
+        l29.place(relx=0.5, rely=0.2, anchor=CENTER)
+
+        l30 = Label(new_window, text=Al2O3_mole, bg=PSU_BLUE, fg="white")
+        l30.grid(row=0, column=0, padx=30, pady=30)
+        l30.place(relx=0.5, rely=0.3, anchor=CENTER)
+
+        l31 = Label(new_window, text=CaO_mole, bg=PSU_BLUE, fg="white")
+        l31.grid(row=0, column=0, padx=30, pady=30)
+        l31.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        l32 = Label(new_window, text=Fe2O3_mole, bg=PSU_BLUE, fg="white")
+        l32.grid(row=0, column=0, padx=30, pady=30)
+        l32.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+        l33 = Label(new_window, text=MgO_mole, bg=PSU_BLUE, fg="white")
+        l33.grid(row=0, column=0, padx=30, pady=30)
+        l33.place(relx=0.5, rely=0.6, anchor=CENTER)
+
+        l34 = Label(new_window, text=Na2O_mole, bg=PSU_BLUE, fg="white")
+        l34.grid(row=0, column=0, padx=30, pady=30)
+        l34.place(relx=0.5, rely=0.7, anchor=CENTER)
+
+        #POTENTIAL COLUMNS
+        l35 = Label(new_window, text="(additional column for ratios)", bg=PSU_BLUE, fg="white")
+        l35.grid(row=0, column=0, padx=30, pady=30)
+        l35.place(relx=0.7, rely=0.1, anchor=CENTER)
+
+
+    l2.destroy()
+    c1.destroy()
+    but1.destroy()
+
+
+    #place Re-AIM logo at lower bottom
+    l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
+    l1.place(relx=0.88, rely=0.86, anchor=CENTER)
+    l1.image = ReAIM_logo
+
+
+    #place the calculate button upright corner
+    but2 = Button(window, text="CALCULATE", padx=30, pady=15, command=calculate, bg = "green", fg = "white", font = font)
+    but2.grid(row=10, column=10, columnspan=100, padx=30, pady=30)
+    but2.place(relx=0.88, rely=0.098, anchor=CENTER)
+
+    # place the rest button below calculate button
+    but3 = Button(window, text="RESET", padx=30, pady=15, command=reset, bg="red", fg="white", font=font)
+    but3.grid(row=11, column=10, columnspan=100, padx=70, pady=30)
+    but3.place(relx=0.88, rely=0.3, anchor=CENTER)
+
+
+    #entry and label for precursor's name
+    l3 = Label(window, text="Please enter the name of the precursor: ",bg = PSU_BLUE, fg = "white")
+    l3.grid(row=1, column=1, columnspan=3, padx=30, pady=10)
+
+    e3 = Entry(window, width=35, borderwidth=1, bg = "black", fg = "white")
+    e3.grid(row=1, column=5, columnspan=3, padx=10, pady=10)
+    if e3.index("end") == 0:
+        e3.insert(0, "")
+
+
+    #entry and label for precursor's mass
+    l4 = Label(window, text="Please enter the mass of the precursor in gram (g): ", bg=PSU_BLUE, fg="white")
+    l4.grid(row=2, column=1, columnspan=3, padx=30, pady=10)
+
+
+    e4 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e4.grid(row=2, column=5, columnspan=3, padx=10, pady=10)
+    if e4.index("end") == 0:
+        e4.insert(0, "0")
+
+
+    # entry and label for SiO2
+    l5 = Label(window, text="Please enter SiO2 content in (%): ", bg=PSU_BLUE, fg="white")
+    l5.grid(row=3, column=1, columnspan=3, padx=30, pady=10)
+
+    e5 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e5.grid(row=3, column=5, columnspan=3, padx=10, pady=10)
+    if e5.index("end") == 0:
+        e5.insert(0, "0")
+
+    # entry and label for Al2O3
+    l6 = Label(window, text="Please enter Al2O3 content in (%): ", bg=PSU_BLUE, fg="white")
+    l6.grid(row=4, column=1, columnspan=3, padx=30, pady=10)
+
+    e6 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e6.grid(row=4, column=5, columnspan=3, padx=10, pady=10)
+    if e6.index("end") == 0:
+        e6.insert(0, "0")
+
+    # entry and label for CaO
+    l7 = Label(window, text="Please enter CaO content in (%): ", bg=PSU_BLUE, fg="white")
+    l7.grid(row=5, column=1, columnspan=3, padx=20, pady=10)
+
+    e7 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e7.grid(row=5, column=5, columnspan=3, padx=20, pady=10)
+    if e7.index("end") == 0:
+        e7.insert(0, "0")
+
+    # entry and label for Fe2O3
+    l8 = Label(window, text="Please enter Fe2O3 content in (%): ", bg=PSU_BLUE, fg="white")
+    l8.grid(row=6, column=1, columnspan=3, padx=20, pady=10)
+
+    e8 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e8.grid(row=6, column=5, columnspan=3, padx=20, pady=10)
+    if e8.index("end") == 0:
+        e8.insert(0, "0")
+
+    # entry and label for MgO
+    l9 = Label(window, text="Please enter MgO content in (%): ", bg=PSU_BLUE, fg="white")
+    l9.grid(row=7, column=1, columnspan=3, padx=20, pady=10)
+
+    e9 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e9.grid(row=7, column=5, columnspan=3, padx=20, pady=10)
+    if e9.index("end") == 0:
+        e9.insert(0, "0")
+
+    # entry and label for Na2O
+    l10 = Label(window, text="Please enter Na2O content in (%): ", bg=PSU_BLUE, fg="white")
+    l10.grid(row=8, column=1, columnspan=3, padx=20, pady=10)
+
+    e10 = Entry(window, width=35, borderwidth=1, bg="black", fg="white")
+    e10.grid(row=8, column=5, columnspan=3, padx=20, pady=10)
+    if e10.index("end") == 0:
+        e10.insert(0, "0")
+
+
+#=========================================================================================
+
+l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
+#make reference or else the picture would not show up properly
+l1.image = ReAIM_logo
+l1.place(relx=0.525, rely=0.18, anchor=CENTER)
+
+c1.grid(row=0, column=0, columnspan=3, padx=0, pady=0)
+#make reference or else the picture would not show up properly
+c1.image = CClogo
+c1.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+l2 = Label(window,text="Thanks for using the Concrete Calculator. Please click 'START' to begin.", font = font, padx=10, pady=20, fg = "white", bg = PSU_BLUE)
+l2.place(relx=0.5, rely=0.55, anchor=CENTER)
+
+but1 = Button(window, text="START", padx=40, pady=20, command=start, font = font, fg = "red")
+but1.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+but1.place(relx=0.5, rely=0.7, anchor=CENTER)
+
+#list of buttons
+#but1 = Button(window, text="RESET", padx=40, pady=20, command=none)
+#but1 = Button(window, text="ADD COMPONENT", padx=40, pady=20, command=none)
+
+
 
 window.mainloop()
-
-
-
-
