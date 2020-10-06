@@ -23,10 +23,10 @@ def get_compound_mass(precursor_mass, percentage):
     return float(precursor_mass * percentage / 100)
 
 #Logo
-ReAIM_logo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\ReAIMlogo.png")
-CClogo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\CClogo.png")
-l1 = Label(window, image = ReAIM_logo,text="", font = font, bg= PSU_BLUE)
-c1 = Label(window, image = CClogo,text="", font = font, bg= PSU_BLUE)
+#ReAIM_logo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\ReAIMlogo.png")
+#CClogo = PhotoImage(file="C:\\Users\\xhjma\Desktop\\Concrete Calculator\\CClogo.png")
+#l1 = Label(window, image = ReAIM_logo,text="", font = font, bg= PSU_BLUE)
+#c1 = Label(window, image = CClogo,text="", font = font, bg= PSU_BLUE)
 
 #setting up screen
 width_of_window = 1900
@@ -338,8 +338,6 @@ def start():
         for component_count in range(len(compound_list)):
             display.append(compound_list[component_count].return_all())
 
-            print(len(display))
-            print(display)
 
 
 
@@ -355,14 +353,14 @@ def start():
 
 
     l2.destroy()
-    c1.destroy()
+    #c1.destroy()
     but1.destroy()
 
 
     #place Re-AIM logo at lower bottom
-    l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
-    l1.place(relx=0.88, rely=0.86, anchor=CENTER)
-    l1.image = ReAIM_logo
+    #l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
+    #l1.place(relx=0.88, rely=0.86, anchor=CENTER)
+    #l1.image = ReAIM_logo
 
 
     #place the calculate button upright corner
@@ -432,15 +430,15 @@ def start():
 
 #=========================================================================================
 
-l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
+#l1.grid(row=0, column=0, columnspan=3, padx=30, pady=30)
 #make reference or else the picture would not show up properly
-l1.image = ReAIM_logo
-l1.place(relx=0.525, rely=0.18, anchor=CENTER)
+#l1.image = ReAIM_logo
+#l1.place(relx=0.525, rely=0.18, anchor=CENTER)
 
-c1.grid(row=0, column=0, columnspan=3, padx=0, pady=0)
+#c1.grid(row=0, column=0, columnspan=3, padx=0, pady=0)
 #make reference or else the picture would not show up properly
-c1.image = CClogo
-c1.place(relx=0.5, rely=0.4, anchor=CENTER)
+#c1.image = CClogo
+#c1.place(relx=0.5, rely=0.4, anchor=CENTER)
 
 l2 = Label(window,text="Thanks for using the Concrete Calculator. Please click 'START' to begin.", font = font, padx=10, pady=20, fg = "white", bg = PSU_BLUE)
 l2.place(relx=0.5, rely=0.55, anchor=CENTER)
